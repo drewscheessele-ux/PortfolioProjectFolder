@@ -1,0 +1,769 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drew | UX/UI Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4eadb;
+      --surface: #f9f2e9;
+      --surface-soft: #eef4ee;
+      --text: #101010;
+      --text-muted: #3f4a44;
+      --accent: #c66f5f;
+      --accent-2: #8aac8e;
+      --line: rgba(16, 16, 16, 0.16);
+      --radius: 18px;
+      --max: 1120px;
+      --shadow: 0 14px 35px rgba(57, 47, 38, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Sora", sans-serif;
+      color: var(--text);
+      background: radial-gradient(1100px 700px at 88% -6%, rgba(139, 172, 194, 0.42) 0%, rgba(139, 172, 194, 0) 62%),
+        radial-gradient(900px 700px at -8% 6%, rgba(198, 111, 95, 0.22) 0%, rgba(198, 111, 95, 0) 58%),
+        linear-gradient(145deg, #f4eadb 0%, #efe4d2 45%, #f7efe4 100%);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(16, 16, 16, 0.05) 0.7px, transparent 0.7px);
+      background-size: 4px 4px;
+      opacity: 0.12;
+      z-index: -1;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(244, 234, 219, 0.82);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 5px rgba(242, 127, 93, 0.18);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.15rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--accent-2);
+      letter-spacing: 0.13em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: "Spectral", serif;
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      line-height: 0.98;
+      margin: 0;
+      max-width: 10ch;
+    }
+
+    .lead {
+      margin: 1.35rem 0 2rem;
+      max-width: 52ch;
+      color: var(--text-muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.78rem 1.2rem;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: #6f9fc7;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #638fb4;
+      box-shadow: 0 10px 18px rgba(68, 103, 133, 0.24);
+    }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(122, 164, 141, 0.12);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(16, 16, 16, 0.35);
+      background: rgba(122, 164, 141, 0.2);
+    }
+
+    .hero-panel {
+      position: relative;
+      background: linear-gradient(155deg, rgba(198, 111, 95, 0.18) 0%, rgba(139, 172, 194, 0.18) 48%, rgba(138, 172, 142, 0.2) 100%),
+        var(--surface);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: floatIn 0.9s ease forwards;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      right: -85px;
+      top: -85px;
+      background: radial-gradient(circle at 30% 30%, rgba(242, 182, 109, 0.6), rgba(242, 182, 109, 0));
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-card {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(16, 16, 16, 0.09);
+      border-radius: 14px;
+      padding: 0.95rem;
+      min-height: 118px;
+    }
+
+    .panel-card strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-top: 0.25rem;
+      color: var(--text);
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      margin: 0;
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .work-card {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      background: linear-gradient(175deg, rgba(255, 255, 255, 0.5), rgba(238, 244, 238, 0.7));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(242, 182, 109, 0.72);
+    }
+
+    .work-card.is-clickable {
+      cursor: pointer;
+    }
+
+    .work-card.is-clickable:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    .cover {
+      height: 100%;
+      min-height: 185px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .cover-button {
+      width: 100%;
+      border: 0;
+      padding: 0;
+      display: block;
+      cursor: pointer;
+      background-color: transparent;
+      font: inherit;
+      color: inherit;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(190deg, rgba(8, 16, 25, 0.05), rgba(8, 16, 25, 0.64));
+    }
+
+    .cover-a {
+      background-image: url("reciprocal-thumbnail.jpg");
+    }
+
+    .cover-b {
+      background-image: url("isitego-slides/RealTimeGraphics iSiteGo1-ISG1(Online) (2)_1.png");
+    }
+
+    .cover-c {
+      background-image: url("canvas-thumbnail.jpeg");
+    }
+
+    .cover-d {
+      background-image: url("cui-pdf-images/CUI_Final_Report_p01_i05_60f0c5ee.png");
+    }
+
+    .work-content {
+      padding: 1rem;
+      align-self: center;
+    }
+
+    .kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 0.35rem;
+    }
+
+    .work-content h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.05rem;
+    }
+
+    .work-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 0.9rem;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.9rem 0;
+    }
+
+    .tag {
+      border: 1px solid rgba(16, 16, 16, 0.16);
+      border-radius: 999px;
+      padding: 0.32rem 0.62rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .project-links .btn-primary {
+      color: #fff;
+    }
+
+    .video-embed {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .video-embed iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+    }
+
+    .video-help {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .step {
+      background: var(--surface-soft);
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      padding: 1rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242, 127, 93, 0.16);
+      color: var(--accent-2);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .portrait {
+      min-height: 280px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at 25% 25%, rgba(242, 182, 109, 0.5), transparent 45%),
+        radial-gradient(circle at 78% 40%, rgba(242, 127, 93, 0.28), transparent 48%),
+        linear-gradient(140deg, #1b2d43, #0f1f31 50%, #1d334a);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait::before {
+      content: "Design with intent";
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      font-family: "Spectral", serif;
+      font-size: 1.4rem;
+      opacity: 0.85;
+    }
+
+    .about-copy {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+    }
+
+    .about-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.52rem 0.72rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .contact {
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 2rem;
+      background: linear-gradient(145deg, rgba(242, 127, 93, 0.14), rgba(17, 34, 53, 0.4));
+      text-align: center;
+    }
+
+    .contact h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      padding: 2rem 0 2.5rem;
+      text-align: center;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    [data-reveal].show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes floatIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 3.5rem;
+      }
+
+      .work-card {
+        grid-template-columns: 250px 1fr;
+      }
+
+      .process {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(var(--max), calc(100% - 1.2rem));
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-panel {
+        padding: 0.9rem;
+      }
+
+      .panel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .work-grid,
+      .process,
+      .about-list {
+        grid-template-columns: 1fr;
+      }
+
+      .work-card {
+        grid-template-columns: 1fr;
+      }
+
+      .cover {
+        min-height: 170px;
+      }
+
+      .section {
+        padding: 3.8rem 0;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+
+  <div class="nav-wrap">
+    <div class="container">
+      <nav>
+        <a class="brand" href="#top"><span class="dot"></span> Drew Scheessele</a>
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <main id="top">
+    <section class="container hero">
+      <div>
+        <span class="eyebrow">UX/UI Portfolio</span>
+        <h1>Designing calmness in complex places.</h1>
+        <p class="lead">
+          I help teams ship digital experiences that feel clear, fast, and human. My focus is product strategy,
+          systems thinking, and interfaces that reduce friction .
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">View Case Studies</a>
+          <a class="btn btn-ghost" href="#contact">Book a Project Call</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Portfolio highlights">
+        <div class="panel-grid">
+          <div class="panel-card">
+            Product launches
+            <strong>14</strong>
+            <span class="muted">0-1 and redesigns</span>
+          </div>
+          <div class="panel-card">
+            Avg. conversion lift
+            <strong>+28%</strong>
+            <span class="muted">Across key flows</span>
+          </div>
+          <div class="panel-card">
+            Design systems
+            <strong>5</strong>
+            <span class="muted">Cross-platform libraries</span>
+          </div>
+          <div class="panel-card">
+            Team style
+            <strong>Hands-on</strong>
+            <span class="muted">With product + engineering</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="work" class="section container" data-reveal>
+      <div class="section-head">
+        <h2>Selected Work</h2>
+        <p class="muted">Recent UX/UI case studies with measurable outcomes.</p>
+      </div>
+      <div class="work-grid">
+        <a class="work-card is-clickable" href="reciprocal-case-study.html" aria-label="Open Reciprocal case study page">
+          <div class="cover cover-a"></div>
+          <div class="work-content">
+            <p class="kicker">Hackathon Project</p>
+            <h3>Reciprocal: Recipe to Grocery</h3>
+            <p class="muted">I designed this iOS app concept for RevenueCat Shipyard to reduce recipe-to-cooking friction.</p>
+            <div class="work-meta">
+              <span>Role: Lead Designer</span>
+              <span>Contest: Creator Track</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card is-clickable" href="isitego-case-study.html" aria-label="Open iSiteGo case study page">
+          <div class="cover cover-b"></div>
+          <div class="work-content">
+            <p class="kicker">Academic Team Project</p>
+            <h3>iSiteGo: Firefighter Spatial Awareness</h3>
+            <p class="muted">I developed this research-driven concept to improve real-time indoor coordination between firefighters and dispatchers.</p>
+            <div class="work-meta">
+              <span>Context: IUPUI, Spring 2024</span>
+              <span>Methods: 8-step UX process</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card is-clickable" href="canvas-case-study.html" aria-label="Open Canvas notification redesign case study page">
+          <div class="cover cover-c"></div>
+          <div class="work-content">
+            <p class="kicker">Product UX Redesign</p>
+            <h3>Canvas Notification Box Redesign</h3>
+            <p class="muted">I redesigned Canvas notifications to bring announcements, assignments, grades, and modules into one persistent workflow.</p>
+            <div class="work-meta">
+              <span>Role: UX/UI Designer</span>
+              <span>Focus: Reduced navigation friction</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card is-clickable" href="mind-keep-case-study.html" aria-label="Open Mind Keep mental health case study page">
+          <div class="cover cover-d"></div>
+          <div class="work-content">
+            <p class="kicker">Conversational UX</p>
+            <h3>Mind Keep: Mental Health CUI</h3>
+            <p class="muted">I designed this CBT and guided-meditation conversational assistant to make mental health support feel more accessible.</p>
+            <div class="work-meta">
+              <span>Role: UX Research + CUI Design</span>
+              <span>Format: Prototype + user testing</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </section>
+
+    <section id="process" class="section container" data-reveal>
+      <div class="section-head">
+        <h2>How I Work</h2>
+        <p class="muted">Research-led, prototype-heavy, and grounded in real user behavior.</p>
+      </div>
+      <div class="process">
+        <article class="step">
+          <span class="step-num">01</span>
+          <h3>Investigate the Real Problem</h3>
+          <p class="muted">I start with research synthesis: interviews, secondary research, and competitor analysis to find root friction instead of surface symptoms.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">02</span>
+          <h3>Structure Insights Into Direction</h3>
+          <p class="muted">I convert findings into personas, affinity maps, storyboards, and user flows so each concept is tied to clear user and system needs.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">03</span>
+          <h3>Prototype and Stress-Test</h3>
+          <p class="muted">I prototype early and often, from paper and Wizard-of-Oz tests to interactive Figma/GPT prototypes, to validate behavior before implementation.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">04</span>
+          <h3>Refine for Adoption</h3>
+          <p class="muted">I iterate based on qualitative feedback, usability outcomes, and constraints to deliver practical recommendations teams can actually ship.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section container" data-reveal>
+      <div class="about">
+        <div class="portrait" role="img" aria-label="Abstract designer portrait panel"></div>
+        <div class="about-copy">
+          <h2>About</h2>
+          <p class="muted">
+            I am a UX/UI designer focused on complex product ecosystems. I turn dense feature sets into clear,
+            intuitive interfaces through systems thinking, strong UX writing, and close collaboration with engineers.
+          </p>
+          <div class="about-list">
+            <span class="pill">Figma + Prototyping</span>
+            <span class="pill">Design Systems</span>
+            <span class="pill">Journey Mapping</span>
+            <span class="pill">Usability Testing</span>
+            <span class="pill">Accessibility (WCAG)</span>
+            <span class="pill">Product Strategy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section container" data-reveal>
+      <div class="contact">
+        <h2>Let&apos;s Build Something Useful</h2>
+        <p class="muted">Available for contract and full-time product design opportunities.</p>
+        <div class="hero-actions" style="justify-content: center; margin-top: 1rem;">
+          <a class="btn btn-primary" href="mailto:drewscheessele@gmail.com">drewscheessele@gmail.com</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/drew-scheessele-5b083111b/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 Drew Scheessele Designed and crafted with intent.</div>
+  </footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('[data-reveal]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    revealItems.forEach((item, idx) => {
+      item.style.transitionDelay = `${idx * 80}ms`;
+      observer.observe(item);
+    });
+
+  </script>
+</body>
+</html>
