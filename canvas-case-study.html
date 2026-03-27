@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Case Study | Drew Scheessele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4eadb;
+      --text: #101010;
+      --text-muted: #3f4a44;
+      --accent: #6f9fc7;
+      --line: rgba(16, 16, 16, 0.16);
+      --radius: 16px;
+      --shadow: 0 14px 35px rgba(57, 47, 38, 0.18);
+      --nav-height: 72px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Sora", sans-serif;
+      color: var(--text);
+      background: radial-gradient(1100px 700px at 88% -6%, rgba(139, 172, 194, 0.42) 0%, rgba(139, 172, 194, 0) 62%),
+        radial-gradient(900px 700px at -8% 6%, rgba(122, 164, 141, 0.2) 0%, rgba(122, 164, 141, 0) 58%),
+        linear-gradient(145deg, #f4eadb 0%, #efe4d2 45%, #f7efe4 100%);
+      scroll-behavior: smooth;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(244, 234, 219, 0.82);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: var(--nav-height);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #6f9fc7;
+      box-shadow: 0 0 0 5px rgba(111, 159, 199, 0.18);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.15rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .layout {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 1rem;
+      padding: 1rem 0 2rem;
+    }
+
+    .sidenav {
+      position: sticky;
+      top: calc(var(--nav-height) + 1rem);
+      align-self: start;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .sidenav h3 {
+      margin: 0 0 0.75rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .sidenav a {
+      display: block;
+      padding: 0.44rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .sidenav a:hover {
+      background: rgba(111, 159, 199, 0.14);
+      color: var(--text);
+    }
+
+    .main,
+    .other-work-inner {
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .main { padding: 1.2rem; }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.8rem;
+    }
+
+    .back,
+    .btn {
+      border: 1px solid var(--line);
+      background: rgba(122, 164, 141, 0.12);
+      border-radius: 999px;
+      padding: 0.48rem 0.82rem;
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #6f9fc7;
+      border-color: rgba(63, 95, 127, 0.2);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover { background: #638fb4; }
+
+    .eyebrow {
+      font-size: 0.76rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #3f5f7f;
+      margin-bottom: 0.45rem;
+      display: inline-block;
+    }
+
+    h1 {
+      font-family: "Spectral", serif;
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      margin: 0 0 0.45rem;
+      line-height: 1.05;
+    }
+
+    h2 {
+      margin: 1.25rem 0 0.5rem;
+      font-size: 1.28rem;
+    }
+
+    p { margin: 0.55rem 0; }
+
+    ul {
+      margin: 0.45rem 0 0;
+      padding-left: 1.15rem;
+    }
+
+    li { margin: 0.26rem 0; }
+
+    .muted { color: var(--text-muted); }
+
+    .hero-img,
+    .artifact-grid img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      display: block;
+      cursor: pointer;
+    }
+
+    .hero-img { margin: 0.8rem 0 0.2rem; }
+
+    .artifact-grid img {
+      background: rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .artifact-grid img:hover,
+    .hero-img:hover {
+      transform: translateY(-2px);
+      border-color: rgba(63, 95, 127, 0.35);
+    }
+
+    .tag-row,
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    .tag {
+      border: 1px solid rgba(16, 16, 16, 0.16);
+      border-radius: 999px;
+      padding: 0.3rem 0.58rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+    }
+
+    .image-lightbox.is-open { display: block; }
+
+    .image-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(16, 16, 16, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .image-lightbox__content {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, calc(100% - 1rem));
+      height: calc(100vh - 1rem);
+      margin: 0.5rem auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .image-lightbox__close {
+      grid-column: 1 / -1;
+      justify-self: end;
+      align-self: end;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      cursor: pointer;
+      margin-bottom: 0.2rem;
+    }
+
+    .image-lightbox__nav {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .image-lightbox__img-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-lightbox__img {
+      max-width: 100%;
+      max-height: 80vh;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .image-lightbox__caption {
+      grid-column: 1 / -1;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .other-work-wrap {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto 2rem;
+    }
+
+    .other-work-inner { padding: 0.75rem 1.2rem 1.2rem; }
+    .other-work-inner h2 { margin-top: 0; }
+
+    .other-work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.7rem;
+    }
+
+    .other-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.62);
+      display: block;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .other-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(63, 95, 127, 0.35);
+    }
+
+    .other-thumb {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .other-thumb-reciprocal { background-image: url("reciprocal-thumbnail.jpg"); }
+    .other-thumb-firefighter { background-image: url("isitego-slides/RealTimeGraphics iSiteGo1-ISG1(Online) (2)_1.png"); }
+    .other-thumb-cui { background-image: url("cui-pdf-images/CUI_Final_Report_p01_i05_60f0c5ee.png"); }
+
+    .other-content { padding: 0.75rem; }
+    .other-content h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+
+    section { scroll-margin-top: calc(var(--nav-height) + 1.25rem); }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidenav { position: static; }
+      .two-col,
+      .artifact-grid,
+      .other-work-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .layout { width: min(1260px, calc(100% - 1rem)); }
+      .main { padding: 0.9rem; }
+      .image-lightbox__content {
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: auto auto 1fr auto;
+      }
+      .image-lightbox__nav.prev {
+        grid-column: 1;
+        justify-self: start;
+      }
+      .image-lightbox__nav.next {
+        grid-column: 3;
+        justify-self: end;
+      }
+      .image-lightbox__img-wrap {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="container">
+      <nav>
+        <a class="brand" href="index.html#top"><span class="dot"></span> Drew Scheessele</a>
+        <div class="nav-links">
+          <a href="index.html#work">Work</a>
+          <a href="index.html#process">Process</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidenav">
+      <h3>On This Page</h3>
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem Space</a>
+      <a href="#goals">Goals</a>
+      <a href="#research">Research</a>
+      <a href="#solution">Solution + Prototype</a>
+      <a href="#requirements">Design Requirements</a>
+      <a href="#outcome">Evaluation</a>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <a class="back" href="index.html#work">Back to Portfolio</a>
+      </div>
+      <span class="eyebrow">Case Study</span>
+      <h1>Canvas Notification Box Redesign</h1>
+      <p class="muted">
+        I designed this product UX redesign to centralize critical course updates into a persistent workflow so students would no longer need to navigate through multiple course menus to locate essential information.
+      </p>
+      <div class="tag-row">
+        <span class="tag">UX/UI Designer</span>
+        <span class="tag">Usability Testing</span>
+        <span class="tag">Figma Prototype</span>
+        <span class="tag">Accessibility</span>
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://www.figma.com/proto/tQYP4FhYOhKPhrxKndibxK/Untitled?node-id=1-68&t=ZVS1BQuKJTfXdql1-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A62" target="_blank" rel="noopener noreferrer">Open Prototype</a>
+      </div>
+      <img class="hero-img" src="canvas-thumbnail.jpeg" alt="Canvas notification redesign prototype screen" />
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          In this project, I addressed a recurring student frustration in Canvas: important information existed, but it was distributed across too many course-specific entry points.
+          Announcements, assignments, grades, and modules all required repeated navigation, which increased effort and made time-sensitive items easier to overlook.
+        </p>
+        <p>
+          I introduced a persistent notification workflow that aggregates updates from across courses into a single box that remains accessible from anywhere in the product.
+        </p>
+      </section>
+
+      <section id="problem">
+        <h2>Problem Space</h2>
+        <p>
+          I found that the core issue was not missing information, but discoverability and navigation cost. Students had to move course by course to check for changes,
+          and the labeling patterns did not always signal urgency clearly. This created unnecessary cognitive load in a system used repeatedly under deadline pressure.
+        </p>
+        <p>
+          My redesign goal was to collapse that navigation overhead without breaking existing Canvas mental models.
+        </p>
+      </section>
+
+      <section id="goals">
+        <h2>Goals</h2>
+        <div class="card">
+          <p>1. Surface announcements, assignments, grades, and module activity from one entry point visible across the product.</p>
+          <p>2. Reduce common paths to key course updates to two clicks or fewer.</p>
+          <p>3. Preserve familiar Canvas interaction patterns so the solution felt additive, not disruptive.</p>
+          <p>4. Clarify status and urgency through stronger hierarchy, filtering, and accessible visual cues.</p>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>Research</h2>
+        <p>
+          In my research, I identified repeated menu drilling as the dominant workflow problem. Personas and informal interviews showed that students often moved across multiple course shells to answer simple questions such as "Do I have anything due soon?" or "Did anything new get posted?"
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>Methods used</strong></p>
+            <ul>
+              <li>Persona development</li>
+              <li>Informal interviews</li>
+              <li>Moderated paper prototype testing</li>
+              <li>AI-moderated Strella testing with three students across three tasks each</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>What that validated</strong></p>
+            <ul>
+              <li>I learned that students preferred a unified notification workflow over course-by-course checking</li>
+              <li>Direct linking to the destination screen reduced orientation overhead</li>
+              <li>Status grouping made the system easier to scan quickly</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="solution">
+        <h2>Solution + Prototype</h2>
+        <p>
+          I centered the redesign on a persistent Notification Box opened from the bell icon, supported by a dedicated filter panel from a funnel icon. The box grouped activity across all courses and let students move directly to the relevant destination rather than requiring them to re-enter each course context and locate the content manually.
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>Interface decisions</strong></p>
+            <ul>
+              <li>Unread badge on the bell icon</li>
+              <li>Cross-course grouping for announcements, assignments, modules, and grades</li>
+              <li>Filter controls to narrow content by type</li>
+              <li>Underlined links for stronger click affordance</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>Interaction impact</strong></p>
+            <ul>
+              <li>Students can see what changed before deciding where to go</li>
+              <li>Urgent work is easier to scan and prioritize</li>
+              <li>The notification system becomes a hub instead of a passive alert surface</li>
+            </ul>
+          </div>
+        </div>
+        <div class="artifact-grid">
+          <img src="canvas-thumbnail.jpeg" alt="Canvas redesign overview screen" />
+          <img src="canvas-thumbnail.jpeg" alt="Canvas redesign notification interaction detail" />
+        </div>
+      </section>
+
+      <section id="requirements">
+        <h2>Design Requirements</h2>
+        <p>
+          I also defined concrete product requirements, which gives this case study stronger implementation depth than a purely visual redesign.
+        </p>
+        <div class="card">
+          <ul>
+            <li>Global unread badge visible across the product</li>
+            <li>Filter persistence so users do not need to reset preferences every time</li>
+            <li>Cross-browser support and keyboard navigation</li>
+            <li>Screen-reader compatibility and WCAG-aware contrast</li>
+            <li>Urgency states using yellow for 72-24 hours, red for under 24 hours, and blue for new activity</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="outcome">
+        <h2>Evaluation</h2>
+        <p>
+          Early testing showed a clear preference for the new flow. Students were able to find important updates more quickly, interpret status more effectively, and move into the correct task with less friction.
+          I kept the design close enough to Canvas conventions that the new behavior still felt usable without a long relearning curve.
+        </p>
+        <p>
+          The strongest aspect of this project is how I balanced product familiarity with structural change. Rather than redesigning the entire system,
+          I targeted a narrow but high-frequency pain point and gave it a more scalable information architecture.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <section class="other-work-wrap">
+    <div class="other-work-inner">
+      <h2>Other Work</h2>
+      <div class="other-work-grid">
+        <a class="other-card" href="reciprocal-case-study.html">
+          <div class="other-thumb other-thumb-reciprocal"></div>
+          <div class="other-content">
+            <h3>Reciprocal: Recipe to Grocery</h3>
+            <p class="muted">RevenueCat Shipyard case study.</p>
+          </div>
+        </a>
+        <a class="other-card" href="isitego-case-study.html">
+          <div class="other-thumb other-thumb-firefighter"></div>
+          <div class="other-content">
+            <h3>iSiteGo: Firefighter Spatial Awareness</h3>
+            <p class="muted">Geospatial communication design for emergency response.</p>
+          </div>
+        </a>
+        <a class="other-card" href="mind-keep-case-study.html">
+          <div class="other-thumb other-thumb-cui"></div>
+          <div class="other-content">
+            <h3>Mind Keep: Mental Health CUI</h3>
+            <p class="muted">Conversational UX for CBT and guided meditation.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
+    <div class="image-lightbox__backdrop" data-close-lightbox></div>
+    <div class="image-lightbox__content" role="dialog" aria-modal="true" aria-label="Expanded case study image">
+      <button class="image-lightbox__close" data-close-lightbox>Close</button>
+      <button id="lightbox-prev" class="image-lightbox__nav prev" aria-label="Previous image">&#8249;</button>
+      <div class="image-lightbox__img-wrap">
+        <img id="lightbox-image" class="image-lightbox__img" src="" alt="" />
+      </div>
+      <button id="lightbox-next" class="image-lightbox__nav next" aria-label="Next image">&#8250;</button>
+      <p id="lightbox-caption" class="image-lightbox__caption"></p>
+    </div>
+  </div>
+
+  <script>
+    const expandableImages = Array.from(document.querySelectorAll('.hero-img, .artifact-grid img'));
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxClosers = document.querySelectorAll('[data-close-lightbox]');
+    let activeImageIndex = -1;
+
+    const renderLightboxImage = (index) => {
+      const image = expandableImages[index];
+      if (!image) return;
+      activeImageIndex = index;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = image.alt;
+    };
+
+    const openLightbox = (image) => {
+      const index = expandableImages.indexOf(image);
+      renderLightboxImage(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      activeImageIndex = -1;
+    };
+
+    const stepLightbox = (direction) => {
+      if (!expandableImages.length || activeImageIndex < 0) return;
+      const nextIndex = (activeImageIndex + direction + expandableImages.length) % expandableImages.length;
+      renderLightboxImage(nextIndex);
+    };
+
+    expandableImages.forEach((image) => {
+      image.tabIndex = 0;
+      image.addEventListener('click', () => openLightbox(image));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(image);
+        }
+      });
+    });
+
+    lightboxClosers.forEach((closer) => closer.addEventListener('click', closeLightbox));
+    lightboxPrev.addEventListener('click', () => stepLightbox(-1));
+    lightboxNext.addEventListener('click', () => stepLightbox(1));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+      if (event.key === 'ArrowLeft' && lightbox.classList.contains('is-open')) stepLightbox(-1);
+      if (event.key === 'ArrowRight' && lightbox.classList.contains('is-open')) stepLightbox(1);
+    });
+  </script>
+</body>
+</html>

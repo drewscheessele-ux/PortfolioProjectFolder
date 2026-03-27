@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mind Keep Case Study | Drew Scheessele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4eadb;
+      --surface: #f9f2e9;
+      --surface-soft: #eef4ee;
+      --text: #101010;
+      --text-muted: #3f4a44;
+      --accent: #6f9fc7;
+      --line: rgba(16, 16, 16, 0.16);
+      --radius: 16px;
+      --shadow: 0 14px 35px rgba(57, 47, 38, 0.18);
+      --nav-height: 72px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Sora", sans-serif;
+      color: var(--text);
+      background: radial-gradient(1100px 700px at 88% -6%, rgba(139, 172, 194, 0.42) 0%, rgba(139, 172, 194, 0) 62%),
+        radial-gradient(900px 700px at -8% 6%, rgba(122, 164, 141, 0.2) 0%, rgba(122, 164, 141, 0) 58%),
+        linear-gradient(145deg, #f4eadb 0%, #efe4d2 45%, #f7efe4 100%);
+      scroll-behavior: smooth;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(244, 234, 219, 0.82);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: var(--nav-height);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #6f9fc7;
+      box-shadow: 0 0 0 5px rgba(111, 159, 199, 0.18);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.15rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .layout {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 1rem;
+      padding: 1rem 0 2rem;
+    }
+
+    .sidenav {
+      position: sticky;
+      top: calc(var(--nav-height) + 1rem);
+      align-self: start;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .sidenav h3 {
+      margin: 0 0 0.75rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .sidenav a {
+      display: block;
+      padding: 0.44rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .sidenav a:hover {
+      background: rgba(111, 159, 199, 0.14);
+      color: var(--text);
+    }
+
+    .main {
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .back,
+    .btn {
+      border: 1px solid var(--line);
+      background: rgba(122, 164, 141, 0.12);
+      border-radius: 999px;
+      padding: 0.48rem 0.82rem;
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #6f9fc7;
+      border-color: rgba(63, 95, 127, 0.2);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #638fb4;
+    }
+
+    .eyebrow {
+      font-size: 0.76rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #3f5f7f;
+      margin-bottom: 0.45rem;
+      display: inline-block;
+    }
+
+    h1 {
+      font-family: "Spectral", serif;
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      margin: 0 0 0.45rem;
+      line-height: 1.05;
+    }
+
+    h2 {
+      margin: 1.25rem 0 0.5rem;
+      font-size: 1.28rem;
+    }
+
+    p { margin: 0.55rem 0; }
+
+    ul {
+      margin: 0.45rem 0 0;
+      padding-left: 1.15rem;
+    }
+
+    li { margin: 0.26rem 0; }
+
+    .muted { color: var(--text-muted); }
+
+    .hero-img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      margin: 0.8rem 0 0.2rem;
+      display: block;
+      cursor: pointer;
+    }
+
+    .tag-row,
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    .tag {
+      border: 1px solid rgba(16, 16, 16, 0.16);
+      border-radius: 999px;
+      padding: 0.3rem 0.58rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-top: 0.7rem;
+    }
+
+    .artifact-grid img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .artifact-grid img:hover,
+    .hero-img:hover {
+      transform: translateY(-2px);
+      border-color: rgba(63, 95, 127, 0.35);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+    }
+
+    .image-lightbox.is-open {
+      display: block;
+    }
+
+    .image-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(16, 16, 16, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .image-lightbox__content {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, calc(100% - 1rem));
+      height: calc(100vh - 1rem);
+      margin: 0.5rem auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .image-lightbox__close {
+      grid-column: 1 / -1;
+      justify-self: end;
+      align-self: end;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      cursor: pointer;
+      margin-bottom: 0.2rem;
+    }
+
+    .image-lightbox__nav {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .image-lightbox__nav:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .image-lightbox__img-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-lightbox__img {
+      max-width: 100%;
+      max-height: 80vh;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .image-lightbox__caption {
+      grid-column: 1 / -1;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .other-work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.7rem;
+    }
+
+    .other-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.62);
+      display: block;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .other-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(63, 95, 127, 0.35);
+    }
+
+    .other-thumb {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .other-thumb-reciprocal {
+      background-image: url("reciprocal-thumbnail.jpg");
+    }
+
+    .other-thumb-canvas {
+      background-image: url("canvas-thumbnail.jpeg");
+    }
+
+    .other-thumb-firefighter {
+      background-image: url("isitego-slides/RealTimeGraphics iSiteGo1-ISG1(Online) (2)_1.png");
+    }
+
+    .other-content {
+      padding: 0.75rem;
+    }
+
+    .other-content h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .other-work-wrap {
+      width: min(1260px, calc(100% - 2rem));
+      margin: 0 auto 2rem;
+    }
+
+    .other-work-inner {
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 0.75rem 1.2rem 1.2rem;
+    }
+
+    .other-work-inner h2 {
+      margin-top: 0;
+    }
+
+    section { scroll-margin-top: calc(var(--nav-height) + 1.25rem); }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidenav { position: static; }
+      .two-col,
+      .stat-grid { grid-template-columns: 1fr; }
+      .artifact-grid { grid-template-columns: 1fr 1fr; }
+      .other-work-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .layout { width: min(1260px, calc(100% - 1rem)); }
+      .main { padding: 0.9rem; }
+      .artifact-grid { grid-template-columns: 1fr; }
+      .image-lightbox__content {
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: auto auto 1fr auto;
+      }
+      .image-lightbox__nav.prev {
+        grid-column: 1;
+        justify-self: start;
+      }
+      .image-lightbox__nav.next {
+        grid-column: 3;
+        justify-self: end;
+      }
+      .image-lightbox__img-wrap {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="container">
+      <nav>
+        <a class="brand" href="index.html#top"><span class="dot"></span> Drew Scheessele</a>
+        <div class="nav-links">
+          <a href="index.html#work">Work</a>
+          <a href="index.html#process">Process</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidenav">
+      <h3>On This Page</h3>
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem Space</a>
+      <a href="#goals">Goals</a>
+      <a href="#research">Research</a>
+      <a href="#personas">Personas + Early Concepts</a>
+      <a href="#build">Solution + Prototype</a>
+      <a href="#testing">Testing + Findings</a>
+      <a href="#safety">Safety + Limitations</a>
+      <a href="#next">Next Steps</a>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <a class="back" href="index.html#work">Back to Portfolio</a>
+      </div>
+      <span class="eyebrow">Case Study</span>
+      <h1>Mind Keep: Mental Health CUI</h1>
+      <p class="muted">
+        I designed Mind Keep as a conversational UX concept for more accessible mental health support, combining structured CBT guidance,
+        guided meditation, and open-ended reflection in a format intended to be supportive without positioning itself as a therapist.
+      </p>
+      <div class="tag-row">
+        <span class="tag">UX Research + CUI Design</span>
+        <span class="tag">CBT-Informed Interaction</span>
+        <span class="tag">Custom GPT Prototype</span>
+        <span class="tag">Voice + Text Modality</span>
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://chatgpt.com/g/g-67e391c7ea1c81918ab4379cc10510e4-mind-keep" target="_blank" rel="noopener noreferrer">Open Prototype</a>
+        <a class="btn" href="https://chatgpt.com/share/6816e6a9-ec28-8009-8de2-b1f4b07ed096" target="_blank" rel="noopener noreferrer">CBT Conversation</a>
+        <a class="btn" href="https://chatgpt.com/share/68142297-5380-8009-9139-4e99a5f2cc09" target="_blank" rel="noopener noreferrer">Meditation Conversation</a>
+      </div>
+      <img class="hero-img" src="cui-pdf-images/CUI_Final_Report_p01_i05_60f0c5ee.png" alt="Mind Keep mobile meditation flow prototype" />
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          Mind Keep emerged from a practical accessibility problem: many people want help processing stress, anxiety, or negative thought
+          patterns, yet traditional care is often expensive, delayed, logistically difficult, or emotionally difficult to initiate.
+          I framed the project as a supplementary support tool rather than a replacement for therapy, then designed a conversational system that
+          could help users reflect, regulate, and organize their thinking in the moment.
+        </p>
+        <p>
+          I focused the concept on three core tasks. First, structured CBT sessions for identifying thoughts, emotions, and distortions before
+          reframing them. Second, guided meditations and breathing exercises for immediate regulation. Third, lightweight mental-health Q&amp;A
+          for people who needed quick support without entering a formal exercise.
+        </p>
+      </section>
+
+      <section id="problem">
+        <h2>Problem Space</h2>
+        <p>
+          The source material pointed me to three access barriers: financial, logistical, and psychological. My report cites therapy costs in
+          the $125 to $250 range per 50-minute private session, while Mental Health America data showed a sizable share of adults with
+          extended mentally unhealthy periods still could not access care due to cost. Even when people want support, the surrounding system
+          can still require waitlists, forms, scheduling friction, and willingness to disclose personal struggles to another person.
+        </p>
+        <p>
+          That gap creates space for a different point of entry. A conversational system can be available 24/7, function on phone or desktop, and
+          reduce the commitment barrier that causes many people to avoid formal care. The central design challenge was not availability alone,
+          but designing a system structured enough to be useful, empathetic enough to feel safe, and appropriately constrained so that it would not overstep.
+        </p>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>3</strong>
+            <span class="muted">barrier types defined in the report: financial, logistical, psychological</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span class="muted">availability was a core design advantage over scheduled care</span>
+          </div>
+          <div class="stat">
+            <strong>3</strong>
+            <span class="muted">primary tasks: CBT, guided meditation, and one-off support questions</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="goals">
+        <h2>Goals</h2>
+        <div class="card">
+          <p>1. Make mental-health reflection more approachable for people who are not ready for therapy or cannot access it easily.</p>
+          <p>2. Use structured CBT patterns instead of generic empathy so the system helps users work through thoughts in a concrete way.</p>
+          <p>3. Support both reflective and in-the-moment regulation tasks through text, voice, breathing guidance, and lightweight controls.</p>
+          <p>4. Preserve user trust through consent checks, transparent limitations, privacy-sensitive interaction patterns, and crisis-aware responses.</p>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>Research</h2>
+        <p>
+          I grounded the concept in both literature and real therapeutic structure. In my final report, I drew on APA descriptions of CBT,
+          systematic review findings across Woebot, Wysa, and Youper, and research on authenticity limits in AI empathy. That combination
+          was important because it pushed the design away from generic chatbot behavior and toward a repeatable therapeutic scaffold.
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>Why CBT</strong></p>
+            <ul>
+              <li>CBT gives the system a reliable structure: situation, thoughts, emotions, distortions, reframing, and follow-up.</li>
+              <li>It supports longitudinal use through thought logs, homework, and reflective review across multiple sessions.</li>
+              <li>The format is easier to operationalize in dialogue than open-ended therapy simulation.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>What the research changed</strong></p>
+            <ul>
+              <li>Empathy needed limits. The bot should avoid first-person anecdotes that feel uncanny or false.</li>
+              <li>Meditation needed to be more than text. Audio pacing and controls are part of the core experience.</li>
+              <li>Long-term usefulness depends on memory, pacing, and avoiding repetitive generic advice.</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          I also used my midterm work to examine real CBT transcripts and break them into reusable interaction components such as open inquiry,
+          situation understanding, challenge, reflection, and homework. That move let me translate clinical flow into
+          interaction architecture instead of copying therapy aesthetics.
+        </p>
+      </section>
+
+      <section id="personas">
+        <h2>Personas + Early Concepts</h2>
+        <p>
+          I strengthened the concept in the midterm phase by designing for two distinct usage modes instead of one generic "mental
+          health user." Lauren represented the structured CBT path. Alex represented quick de-escalation and recovery through guided
+          meditation.
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>Lauren, 19, part-time barista</strong></p>
+            <ul>
+              <li>Struggles with social anxiety and self-blame in friendships.</li>
+              <li>Cannot easily afford therapy without employer-supported coverage.</li>
+              <li>Needs structured help interrupting negative thought spirals and reframing assumptions.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>Alex, 22, full-time college student</strong></p>
+            <ul>
+              <li>Overcommits across academics and campus involvement.</li>
+              <li>Needs short, actionable support when overwhelmed and burnt out.</li>
+              <li>Benefits more from breathing, audio guidance, and low-friction calming tools.</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          These personas directly shaped my early testing methods. For the CBT flow, I used a Think Aloud paper prototype because the
+          dialogue needed to stay reactive to whatever the user wrote. For the meditation flow, I used a Wizard of Oz format with text,
+          audio cues, and simulated guidance because the real value came from how the interaction felt while the user disengaged from the
+          screen.
+        </p>
+      </section>
+
+      <section id="build">
+        <h2>Solution + Prototype</h2>
+        <p>
+          I shifted the final prototype from paper to a working custom GPT. That let me test real dynamic responses instead of static
+          branching. It also let me encode behavioral rules at the instruction level: tone, scope, crisis handling, consent checks, pacing,
+          and when to offer structured exercises.
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>System behavior rules</strong></p>
+            <ul>
+              <li>Warm and supportive tone without pretending to have human experiences.</li>
+              <li>Consent check before deeper CBT or meditative work.</li>
+              <li>Shorter responses when users type briefly, to avoid overload.</li>
+              <li>Support for off-script Q&amp;A without breaking the overall mental-health framing.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>Knowledge base inputs</strong></p>
+            <ul>
+              <li>CBT clinical simulation transcript</li>
+              <li>Systematic review of AI-powered CBT chatbots</li>
+              <li>Research on AI meditation apps</li>
+              <li>Research on therapeutic robots and artificial empathy</li>
+              <li>Supporting background for tone, authenticity, and behavioral limits</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          I also made a pragmatic platform choice. I considered BotPress, LandBot, and VoiceFlow, but selected ChatGPT because the responses were
+          more reactive and substantially less constrained than rigid pre-authored flows. That mattered in
+          this CUI because the quality of therapeutic pacing depended on the system's ability to follow a user's actual context.
+        </p>
+        <div class="artifact-grid">
+          <img src="cui-pdf-images/CUI_Final_Report_p01_i01_5fdf4dbf.png" alt="Mind Keep CBT conversation screenshot" />
+          <img src="cui-pdf-images/CUI_Final_Report_p01_i02_24072eba.png" alt="Mind Keep CBT worksheet screenshot" />
+          <img src="cui-pdf-images/CUI_Final_Report_p01_i03_4b3e487d.png" alt="Mind Keep 4-7-8 breathing guide screenshot" />
+          <img src="cui-pdf-images/CUI_Final_Report_p01_i04_a9eb975e.png" alt="Mind Keep audio-style breathing script screenshot" />
+          <img src="cui-pdf-images/CUI_Final_Report_p01_i05_60f0c5ee.png" alt="Mind Keep mobile meditation option flow screenshot" />
+        </div>
+      </section>
+
+      <section id="testing">
+        <h2>Testing + Findings</h2>
+        <p>
+          I used two useful testing phases in this project. Early on, I used focus-group-style questions, paper prototyping, and
+          Wizard of Oz simulation to understand whether the concept felt approachable at all. In the final round, I tested the custom GPT
+          with two pilot users and an exploratory review from a psychology doctoral student.
+        </p>
+        <div class="two-col">
+          <div class="card">
+            <p><strong>What users responded to</strong></p>
+            <ul>
+              <li>The structured CBT flow made difficult thoughts easier to examine.</li>
+              <li>Guided audio meditation was valued because it supported hands-free use.</li>
+              <li>Participants saw the tool I built as a credible form of supplementary support.</li>
+              <li>I found that the system's ability to generate tailored content was stronger than expected.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p><strong>What broke trust or flow</strong></p>
+            <ul>
+              <li>Responses could become too long or overly eager to keep prompting.</li>
+              <li>Artificial warmth sometimes felt robotic rather than grounding.</li>
+              <li>The initial option set risked making the product feel narrower than it was.</li>
+              <li>Voice-mode meditation still had naturalness limitations tied to the platform.</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          A consistent pattern I found across both the midterm and final materials was that people responded more strongly to structure than personality. That
+          insight helped me understand that the product performs best when it acts as a clear guide with a supportive tone, rather than when it attempts to
+          simulate human closeness too aggressively.
+        </p>
+      </section>
+
+      <section id="safety">
+        <h2>Safety + Limitations</h2>
+        <p>
+          Because I was designing for mental health support rather than a typical productivity or commerce flow, I treated the safety decisions as first-class
+          design work. My reports repeatedly return to four constraints: transparency, crisis escalation, privacy, and
+          longitudinal memory.
+        </p>
+        <div class="card">
+          <ul>
+            <li>I explicitly framed Mind Keep as a supplemental tool, not medical advice or licensed care.</li>
+            <li>I designed the system to redirect people to crisis resources instead of giving flat refusal language for harmful prompts.</li>
+            <li>Privacy expectations need to be made visible early, including secure handling and optional unsaved chats for sensitive questions.</li>
+            <li>Session memory is useful for CBT, but it must be balanced against user control and comfort with stored history.</li>
+          </ul>
+        </div>
+        <p>
+          In my final report, I also identified engagement as an important product risk. Even if people value the tool, long-term use is not guaranteed.
+          That means success should not be measured only by immediate satisfaction. It should also be measured by whether the product can
+          maintain trust, adapt response depth, and create a reason to return without becoming repetitive.
+        </p>
+      </section>
+
+      <section id="next">
+        <h2>Next Steps</h2>
+        <div class="card">
+          <p>1. Refine response pacing so users can choose concise or detailed support modes and pause before the next prompt.</p>
+          <p>2. Add stronger privacy framing, optional temporary chats, and easier access to previous CBT sessions for reflection.</p>
+          <p>3. Improve the meditation entry UI with more visual controls and better integration between buttons, audio, and text states.</p>
+          <p>4. Expand testing beyond convenience sampling and measure sustained use, not just first-session reaction.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="other-work-wrap">
+    <div class="other-work-inner">
+      <h2>Other Work</h2>
+      <div class="other-work-grid">
+        <a class="other-card" href="reciprocal-case-study.html">
+          <div class="other-thumb other-thumb-reciprocal"></div>
+          <div class="other-content">
+            <h3>Reciprocal: Recipe to Grocery</h3>
+            <p class="muted">RevenueCat Shipyard case study.</p>
+          </div>
+        </a>
+        <a class="other-card" href="canvas-case-study.html">
+          <div class="other-thumb other-thumb-canvas"></div>
+          <div class="other-content">
+            <h3>Canvas Notification Redesign</h3>
+            <p class="muted">Navigation and information architecture improvements.</p>
+          </div>
+        </a>
+        <a class="other-card" href="isitego-case-study.html">
+          <div class="other-thumb other-thumb-firefighter"></div>
+          <div class="other-content">
+            <h3>iSiteGo: Firefighter Spatial Awareness</h3>
+            <p class="muted">Geospatial communication design for emergency response.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
+    <div class="image-lightbox__backdrop" data-close-lightbox></div>
+    <div class="image-lightbox__content" role="dialog" aria-modal="true" aria-label="Expanded case study image">
+      <button class="image-lightbox__close" data-close-lightbox>Close</button>
+      <button id="lightbox-prev" class="image-lightbox__nav prev" aria-label="Previous image">&#8249;</button>
+      <div class="image-lightbox__img-wrap">
+        <img id="lightbox-image" class="image-lightbox__img" src="" alt="" />
+      </div>
+      <button id="lightbox-next" class="image-lightbox__nav next" aria-label="Next image">&#8250;</button>
+      <p id="lightbox-caption" class="image-lightbox__caption"></p>
+    </div>
+  </div>
+
+  <script>
+    const expandableImages = Array.from(document.querySelectorAll('.hero-img, .artifact-grid img'));
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxClosers = document.querySelectorAll('[data-close-lightbox]');
+    let activeImageIndex = -1;
+
+    const renderLightboxImage = (index) => {
+      const image = expandableImages[index];
+      if (!image) return;
+      activeImageIndex = index;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = image.alt;
+    };
+
+    const openLightbox = (image) => {
+      const index = expandableImages.indexOf(image);
+      renderLightboxImage(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      activeImageIndex = -1;
+    };
+
+    const stepLightbox = (direction) => {
+      if (!expandableImages.length || activeImageIndex < 0) return;
+      const nextIndex = (activeImageIndex + direction + expandableImages.length) % expandableImages.length;
+      renderLightboxImage(nextIndex);
+    };
+
+    expandableImages.forEach((image) => {
+      image.tabIndex = 0;
+      image.addEventListener('click', () => openLightbox(image));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(image);
+        }
+      });
+    });
+
+    lightboxClosers.forEach((closer) => {
+      closer.addEventListener('click', closeLightbox);
+    });
+
+    lightboxPrev.addEventListener('click', () => stepLightbox(-1));
+    lightboxNext.addEventListener('click', () => stepLightbox(1));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+        closeLightbox();
+      }
+      if (event.key === 'ArrowLeft' && lightbox.classList.contains('is-open')) {
+        stepLightbox(-1);
+      }
+      if (event.key === 'ArrowRight' && lightbox.classList.contains('is-open')) {
+        stepLightbox(1);
+      }
+    });
+  </script>
+</body>
+</html>
