@@ -173,33 +173,18 @@
 
     .hero-panel {
       position: relative;
-      background: linear-gradient(155deg, rgba(198, 111, 95, 0.18) 0%, rgba(139, 172, 194, 0.18) 48%, rgba(138, 172, 142, 0.2) 100%),
-        var(--surface);
+      background: rgba(249, 242, 233, 0.92);
       border: 1px solid var(--line);
       border-radius: calc(var(--radius) + 8px);
       padding: 1.2rem;
       box-shadow: var(--shadow);
-      overflow: hidden;
       animation: floatIn 0.9s ease forwards;
-    }
-
-    .hero-panel::after {
-      content: "";
-      position: absolute;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      right: -85px;
-      top: -85px;
-      background: radial-gradient(circle at 30% 30%, rgba(242, 182, 109, 0.6), rgba(242, 182, 109, 0));
     }
 
     .panel-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.75rem;
-      position: relative;
-      z-index: 1;
     }
 
     .panel-card {
@@ -410,39 +395,26 @@
       margin-bottom: 0.75rem;
     }
 
-    .about {
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 1rem;
-      align-items: stretch;
-    }
-
-    .portrait {
-      min-height: 280px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: radial-gradient(circle at 25% 25%, rgba(242, 182, 109, 0.5), transparent 45%),
-        radial-gradient(circle at 78% 40%, rgba(242, 127, 93, 0.28), transparent 48%),
-        linear-gradient(140deg, #1b2d43, #0f1f31 50%, #1d334a);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .portrait::before {
-      content: "Design with intent";
-      position: absolute;
-      left: 1rem;
-      bottom: 1rem;
-      font-family: "Spectral", serif;
-      font-size: 1.4rem;
-      opacity: 0.85;
-    }
-
     .about-copy {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 1.2rem;
+    }
+
+    .about-copy.top-panel {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .about-stats {
+      background: rgba(249, 242, 233, 0.92);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
     }
 
     .about-list {
@@ -516,9 +488,6 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .about {
-        grid-template-columns: 1fr;
-      }
     }
 
     @media (max-width: 680px) {
@@ -591,27 +560,20 @@
         </div>
       </div>
 
-      <aside class="hero-panel" aria-label="Portfolio highlights">
-        <div class="panel-grid">
-          <div class="panel-card">
-            Product launches
-            <strong>14</strong>
-            <span class="muted">0-1 and redesigns</span>
-          </div>
-          <div class="panel-card">
-            Avg. conversion lift
-            <strong>+28%</strong>
-            <span class="muted">Across key flows</span>
-          </div>
-          <div class="panel-card">
-            Design systems
-            <strong>5</strong>
-            <span class="muted">Cross-platform libraries</span>
-          </div>
-          <div class="panel-card">
-            Team style
-            <strong>Hands-on</strong>
-            <span class="muted">With product + engineering</span>
+      <aside class="hero-panel" aria-label="About Drew Scheessele">
+        <div class="about-copy top-panel">
+          <h2>About</h2>
+          <p class="muted">
+            I am a UX/UI designer focused on complex product ecosystems. I turn dense feature sets into clear,
+            intuitive interfaces through systems thinking, strong UX writing, and close collaboration with engineers.
+          </p>
+          <div class="about-list">
+            <span class="pill">Figma + Prototyping</span>
+            <span class="pill">Design Systems</span>
+            <span class="pill">Journey Mapping</span>
+            <span class="pill">Usability Testing</span>
+            <span class="pill">Accessibility (WCAG)</span>
+            <span class="pill">Product Strategy</span>
           </div>
         </div>
       </aside>
@@ -704,27 +666,6 @@
           <h3>Refine for Adoption</h3>
           <p class="muted">I iterate based on qualitative feedback, usability outcomes, and constraints to deliver practical recommendations teams can actually ship.</p>
         </article>
-      </div>
-    </section>
-
-    <section id="about" class="section container" data-reveal>
-      <div class="about">
-        <div class="portrait" role="img" aria-label="Abstract designer portrait panel"></div>
-        <div class="about-copy">
-          <h2>About</h2>
-          <p class="muted">
-            I am a UX/UI designer focused on complex product ecosystems. I turn dense feature sets into clear,
-            intuitive interfaces through systems thinking, strong UX writing, and close collaboration with engineers.
-          </p>
-          <div class="about-list">
-            <span class="pill">Figma + Prototyping</span>
-            <span class="pill">Design Systems</span>
-            <span class="pill">Journey Mapping</span>
-            <span class="pill">Usability Testing</span>
-            <span class="pill">Accessibility (WCAG)</span>
-            <span class="pill">Product Strategy</span>
-          </div>
-        </div>
       </div>
     </section>
 

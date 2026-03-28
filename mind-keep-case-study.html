@@ -200,11 +200,14 @@
 
     .hero-img {
       width: 100%;
+      height: clamp(240px, 38vw, 420px);
       border-radius: 12px;
       border: 1px solid var(--line);
       margin: 0.8rem 0 0.2rem;
       display: block;
       cursor: pointer;
+      object-fit: cover;
+      object-position: top center;
     }
 
     .tag-row,
