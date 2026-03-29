@@ -235,6 +235,40 @@
       margin-top: 0.8rem;
     }
 
+    .numbered-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .numbered-section {
+      margin-top: 0.8rem;
+    }
+
+    .numbered-item {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .number-badge {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242, 127, 93, 0.16);
+      color: #8aac8e;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .numbered-item p {
+      margin: 0.1rem 0 0;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -566,11 +600,13 @@
 
       <section id="goals">
         <h2>Goals</h2>
-        <div class="card">
-          <p>1. Make mental-health reflection more approachable for people who are not ready for therapy or cannot access it easily.</p>
-          <p>2. Use structured CBT patterns instead of generic empathy so the system helps users work through thoughts in a concrete way.</p>
-          <p>3. Support both reflective and in-the-moment regulation tasks through text, voice, breathing guidance, and lightweight controls.</p>
-          <p>4. Preserve user trust through consent checks, transparent limitations, privacy-sensitive interaction patterns, and crisis-aware responses.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Make mental-health reflection more approachable for people who are not ready for therapy or cannot access it easily.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Use structured CBT patterns instead of generic empathy so the system helps users work through thoughts in a concrete way.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Support both reflective and in-the-moment regulation tasks through text, voice, breathing guidance, and lightweight controls.</p></div>
+            <div class="numbered-item"><span class="number-badge">04</span><p>Preserve user trust through consent checks, transparent limitations, privacy-sensitive interaction patterns, and crisis-aware responses.</p></div>
+          </div>
         </div>
       </section>
 
@@ -722,7 +758,7 @@
           design work. My reports repeatedly return to four constraints: transparency, crisis escalation, privacy, and
           longitudinal memory.
         </p>
-        <div class="card">
+        <div class="numbered-section">
           <ul>
             <li>I explicitly framed Mind Keep as a supplemental tool, not medical advice or licensed care.</li>
             <li>I designed the system to redirect people to crisis resources instead of giving flat refusal language for harmful prompts.</li>
@@ -739,11 +775,13 @@
 
       <section id="next">
         <h2>Next Steps</h2>
-        <div class="card">
-          <p>1. Refine response pacing so users can choose concise or detailed support modes and pause before the next prompt.</p>
-          <p>2. Add stronger privacy framing, optional temporary chats, and easier access to previous CBT sessions for reflection.</p>
-          <p>3. Improve the meditation entry UI with more visual controls and better integration between buttons, audio, and text states.</p>
-          <p>4. Expand testing beyond convenience sampling and measure sustained use, not just first-session reaction.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Refine response pacing so users can choose concise or detailed support modes and pause before the next prompt.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Add stronger privacy framing, optional temporary chats, and easier access to previous CBT sessions for reflection.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Improve the meditation entry UI with more visual controls and better integration between buttons, audio, and text states.</p></div>
+            <div class="numbered-item"><span class="number-badge">04</span><p>Expand testing beyond convenience sampling and measure sustained use, not just first-session reaction.</p></div>
+          </div>
         </div>
       </section>
     </main>

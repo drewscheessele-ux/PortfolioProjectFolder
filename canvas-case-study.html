@@ -239,6 +239,40 @@
       margin-top: 0.8rem;
     }
 
+    .numbered-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .numbered-section {
+      margin-top: 0.8rem;
+    }
+
+    .numbered-item {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .number-badge {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242, 127, 93, 0.16);
+      color: #8aac8e;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .numbered-item p {
+      margin: 0.1rem 0 0;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -475,11 +509,13 @@
 
       <section id="goals">
         <h2>Goals</h2>
-        <div class="card">
-          <p>1. Surface announcements, assignments, grades, and module activity from one entry point visible across the product.</p>
-          <p>2. Reduce common paths to key course updates to two clicks or fewer.</p>
-          <p>3. Preserve familiar Canvas interaction patterns so the solution felt additive, not disruptive.</p>
-          <p>4. Clarify status and urgency through stronger hierarchy, filtering, and accessible visual cues.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Surface announcements, assignments, grades, and module activity from one entry point visible across the product.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Reduce common paths to key course updates to two clicks or fewer.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Preserve familiar Canvas interaction patterns so the solution felt additive, not disruptive.</p></div>
+            <div class="numbered-item"><span class="number-badge">04</span><p>Clarify status and urgency through stronger hierarchy, filtering, and accessible visual cues.</p></div>
+          </div>
         </div>
       </section>
 

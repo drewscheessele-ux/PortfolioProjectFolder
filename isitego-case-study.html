@@ -215,6 +215,40 @@
       margin-top: 0.8rem;
     }
 
+    .numbered-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .numbered-section {
+      margin-top: 0.8rem;
+    }
+
+    .numbered-item {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .number-badge {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242, 127, 93, 0.16);
+      color: #8aac8e;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .numbered-item p {
+      margin: 0.1rem 0 0;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -495,10 +529,12 @@
 
       <section id="goals">
         <h2>Goals</h2>
-        <div class="card">
-          <p>1. Understand current indoor geospatial and communications workflows used by firefighters and dispatchers.</p>
-          <p>2. Identify pain points in response coordination, tracking, and role-based information exchange.</p>
-          <p>3. Design techniques for dynamic iconography, mapping, and floor-plan communication that I could use to increase safety and clarity.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Understand current indoor geospatial and communications workflows used by firefighters and dispatchers.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Identify pain points in response coordination, tracking, and role-based information exchange.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Design techniques for dynamic iconography, mapping, and floor-plan communication that I could use to increase safety and clarity.</p></div>
+          </div>
         </div>
       </section>
 
@@ -575,10 +611,12 @@
 
       <section id="next">
         <h2>Next Steps</h2>
-        <div class="card">
-          <p>1. Expand direct interviews with firefighters/dispatchers across varied departments and experience levels.</p>
-          <p>2. Validate hardware placement and interaction feasibility in realistic response contexts.</p>
-          <p>3. Iterate toward higher-fidelity prototypes and scenario-based testing with role-specific tasks.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Expand direct interviews with firefighters/dispatchers across varied departments and experience levels.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Validate hardware placement and interaction feasibility in realistic response contexts.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Iterate toward higher-fidelity prototypes and scenario-based testing with role-specific tasks.</p></div>
+          </div>
         </div>
       </section>
     </main>

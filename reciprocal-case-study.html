@@ -228,6 +228,40 @@
       margin-top: 0.8rem;
     }
 
+    .numbered-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .numbered-section {
+      margin-top: 0.8rem;
+    }
+
+    .numbered-item {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .number-badge {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242, 127, 93, 0.16);
+      color: #8aac8e;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .numbered-item p {
+      margin: 0.1rem 0 0;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -514,11 +548,13 @@
 
       <section id="goals">
         <h2>Goals</h2>
-        <div class="card">
-          <p>1. Centralize saved recipes from scattered discovery sources into one dependable destination.</p>
-          <p>2. Reduce the effort and error involved in turning a recipe into a usable grocery list.</p>
-          <p>3. Keep the app native to iOS conventions so users can adopt it with minimal learning cost.</p>
-          <p>4. Build a monetization model that maps premium pricing to real operational cost instead of arbitrary gating.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Centralize saved recipes from scattered discovery sources into one dependable destination.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Reduce the effort and error involved in turning a recipe into a usable grocery list.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Keep the app native to iOS conventions so users can adopt it with minimal learning cost.</p></div>
+            <div class="numbered-item"><span class="number-badge">04</span><p>Build a monetization model that maps premium pricing to real operational cost instead of arbitrary gating.</p></div>
+          </div>
         </div>
       </section>
 
@@ -604,11 +640,13 @@
 
       <section id="next">
         <h2>Next Steps</h2>
-        <div class="card">
-          <p>1. Add image transcription for physical or screenshot-based recipes.</p>
-          <p>2. Integrate with Instacart to reduce the distance between list generation and ingredient ordering.</p>
-          <p>3. Support export into Apple Notes for users with established planning habits.</p>
-          <p>4. Introduce premium AI rewrite and substitution tools for beginners or constrained diets.</p>
+        <div class="numbered-section">
+          <div class="numbered-list">
+            <div class="numbered-item"><span class="number-badge">01</span><p>Add image transcription for physical or screenshot-based recipes.</p></div>
+            <div class="numbered-item"><span class="number-badge">02</span><p>Integrate with Instacart to reduce the distance between list generation and ingredient ordering.</p></div>
+            <div class="numbered-item"><span class="number-badge">03</span><p>Support export into Apple Notes for users with established planning habits.</p></div>
+            <div class="numbered-item"><span class="number-badge">04</span><p>Introduce premium AI rewrite and substitution tools for beginners or constrained diets.</p></div>
+          </div>
         </div>
       </section>
     </main>
